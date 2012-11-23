@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameAlgorithms.Tests", "GameAlgorithms.Tests\GameAlgorithms.Tests.csproj", "{18725E5B-CC3B-4A3B-A9D0-9E061CD5FE45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{964F6D82-0A9B-4DC4-AE55-9E42FB9B5621}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{18725E5B-CC3B-4A3B-A9D0-9E061CD5FE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18725E5B-CC3B-4A3B-A9D0-9E061CD5FE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18725E5B-CC3B-4A3B-A9D0-9E061CD5FE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964F6D82-0A9B-4DC4-AE55-9E42FB9B5621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964F6D82-0A9B-4DC4-AE55-9E42FB9B5621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964F6D82-0A9B-4DC4-AE55-9E42FB9B5621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964F6D82-0A9B-4DC4-AE55-9E42FB9B5621}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
