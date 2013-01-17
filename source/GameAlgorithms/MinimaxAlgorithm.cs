@@ -4,86 +4,44 @@ using System.Linq;
 
 namespace Quarto.Algorithms
 {
-    public class MinimaxAlgorithm<TGameState, TMove> where TMove : IMove<TGameState>
+    public class MinimaxAlgorithm<T>
     {
-        private readonly Func<TGameState, IEnumerable<TMove>> getPossibleMoves;
-        private readonly Func<TGameState, float> getScore;
-        private int searchDepth = 3;
-
-        public MinimaxAlgorithm(Func<TGameState, IEnumerable<TMove>> getPossibleMoves, Func<TGameState, float> getScore, int searchDepth = 1)
+    	private readonly Func<T, bool> isTerminalState;
+    	private readonly Func<T, float> getUtilityValue;
+    	private readonly Func<T, IEnumerable<IMove<T>>> getMoves;
+    	
+        public MinimaxAlgorithm(Func<T, bool> isTerminalState, Func<T, float> getUtilityValue, Func<T, IEnumerable<IMove<T>>> getMoves)
         {
-            this.SearchDepth = searchDepth;
-            this.getPossibleMoves = getPossibleMoves;
-            this.getScore = getScore;
+        	this.isTerminalState = isTerminalState;
+        	this.getUtilityValue = getUtilityValue;
+        	this.getMoves = getMoves;
         }
 
-        public int SearchDepth
+        internal float GetMinimumValue(T state)
         {
-            get { return this.searchDepth; }
-            set
-            {
-                if (this.searchDepth <= 0)
-                {
-                    throw new ArgumentException("SearchDepth must be greater than 0.");
-                }
-
-                this.searchDepth = value;
-            }
+        	if(isTerminalState(state))
+        	{
+        		return getUtilityValue(state);
+        	}
+        	
+        	return getMoves(state).Min(m => GetMinimumValue(m.ApplyTo(state)));
         }
-
-        public TMove GetBestMove(TGameState gameState)
+        
+        internal float GetMaximumValue(T state)
         {
-            return this.Max(gameState, 0).OrderBy(t => t.Score).First().Move;
+        	if(isTerminalState(state))
+        	{
+        		return getUtilityValue(state);
+        	}
+        	
+        	return getMoves(state).Max(m => GetMaximumValue(m.ApplyTo(state)));
         }
-
-        private IEnumerable<EvaluatedMove> Max(TGameState gameState, int currentDepth)
+        
+        public IMove<T> GetNextMove(T state)
         {
-            IEnumerable<Tuple<TMove, TGameState>> possibleMoves = this.getPossibleMoves(gameState).Select(m => new Tuple<TMove, TGameState>(m, m.Apply(gameState)));
-
-            if (currentDepth >= this.SearchDepth)
-            {
-                return possibleMoves.Select(t => new EvaluatedMove(t.Item1, this.getScore(t.Item2)));
-            }
-            else
-            {
-                return possibleMoves.Select(t => new EvaluatedMove(t.Item1, this.Min(t.Item2, currentDepth + 1).Select(r => r.Score).Max()));
-            }
-        }
-
-        private IEnumerable<EvaluatedMove> Min(TGameState gameState, int currentDepth)
-        {
-            IEnumerable<Tuple<TMove, TGameState>> possibleMoves = this.getPossibleMoves(gameState).Select(m => new Tuple<TMove, TGameState>(m, m.Apply(gameState)));
-
-            if (currentDepth >= this.SearchDepth)
-            {
-                return possibleMoves.Select(t => new EvaluatedMove(t.Item1, -this.getScore(t.Item2)));
-            }
-            else
-            {
-                return possibleMoves.Select(t => new EvaluatedMove(t.Item1, this.Max(t.Item2, currentDepth + 1).Select(r => r.Score).Min()));
-            }
-        }
-
-        private class EvaluatedMove
-        {
-            private readonly TMove move;
-            private readonly float score;
-
-            public EvaluatedMove(TMove move, float score)
-            {
-                this.move = move;
-                this.score = score;
-            }
-
-            public TMove Move
-            {
-                get { return this.move; }
-            }
-
-            public float Score
-            {
-                get { return this.score; }
-            }
+        	return getMoves(state).Select(m => new { Move = m, UtilityValue = GetMaximumValue(m.ApplyTo(state)) }).OrderByDescending(v => v.UtilityValue).First().Move;
         }
     }
+    
+ 
 }

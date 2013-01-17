@@ -40,7 +40,7 @@ namespace Domain.Tests
                 new Stone(Size.Low, Surface.Hole, Color.Black, Shape.Round),
                 new Stone(Size.Low, Surface.Hole, Color.Black, Shape.Square),
                 new Stone(Size.Low, Surface.Hole, Color.White, Shape.Round),
-                new Stone(Size.Low, Surface.Hole, Color.White, Shape.Square),
+                new Stone(Size.Low, Surface.Hole, Color.White, Shape.Square)
             };
     }
 }

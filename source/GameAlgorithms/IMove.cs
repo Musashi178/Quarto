@@ -1,7 +1,10 @@
+﻿using System;
+
 namespace Quarto.Algorithms
 {
-    public interface IMove<TGameState>
+	   public interface IMove<T>
     {
-        TGameState Apply(TGameState gameState);
+    	T ApplyTo(T state);
     }
+    
 }

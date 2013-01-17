@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -17,11 +18,12 @@ using System.Runtime.InteropServices;
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
+[assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("c03e3c45-10e1-47aa-a147-f7a0a59d5a2f")]
-[assembly: InternalsVisibleTo("Domain.Tests")]
+[assembly: InternalsVisibleTo("Domain.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100afa7cb9d81da8725dc24561579a45a393930878e0795bdbcac3ad66c02aead4fa33d64ff2fd4d8c79547a88a0163a360dfe4c473ce2daf5db22b9f93d5b4a7df80c0f14d54be9dd22de13eb2d804dd8b9d4e0f1174b3a77f4c0afee18d389b4877b9e6af3688e624728bf5e4b8e26f257ab5ce9da63d4543ff2cb75752dde9cc")]
 
 // Version information for an assembly consists of the following four values:
 //
