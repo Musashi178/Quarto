@@ -2,30 +2,6 @@
 
 namespace Quarto.Domain
 {
-    public enum Size
-    {
-        Low = 0,
-        High = 1
-    }
-
-    public enum Surface
-    {
-        Flat = 0,
-        Hole = 1
-    }
-
-    public enum Color
-    {
-        Black = 0,
-        White = 1
-    }
-
-    public enum Shape
-    {
-        Round = 0,
-        Square = 1
-    }
-
     public class Stone : IEquatable<Stone>
     {
         private readonly Color color;
