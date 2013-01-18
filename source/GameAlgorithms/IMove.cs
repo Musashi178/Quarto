@@ -1,7 +1,7 @@
 ﻿namespace Quarto.Algorithms
 {
-    public interface IMove<T>
+    public interface IMove<TState>
     {
-        T ApplyTo(T state);
+        TState ApplyTo(TState state);
     }
 }

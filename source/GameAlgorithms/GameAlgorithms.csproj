@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenericGameDescription.cs" />
-    <Compile Include="IGameProblemDescription.cs" />
+    <Compile Include="IGameDescription.cs" />
     <Compile Include="IMove.cs" />
     <Compile Include="MinimaxAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

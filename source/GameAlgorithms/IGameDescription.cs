@@ -2,10 +2,10 @@
 
 namespace Quarto.Algorithms
 {
-    public interface IGameProblemDescription<T>
+    public interface IGameDescription<TState>
     {
-        bool IsTerminalState(T state);
-        float GetUtilityValue(T state);
-        IEnumerable<IMove<T>> GetMoves(T state);
+        bool IsTerminalState(TState state);
+        float GetUtilityValue(TState state);
+        IEnumerable<IMove<TState>> GetMoves(TState state);
     }
 }

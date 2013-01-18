@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Quarto.Algorithms
 {
-    public class MinimaxAlgorithm<T>
+    public class MinimaxAlgorithm<TState>
     {
-        private readonly IGameProblemDescription<T> gameDescription;
+        private readonly IGameDescription<TState> gameDescription;
 
-        public MinimaxAlgorithm(IGameProblemDescription<T> gameDescription)
+        public MinimaxAlgorithm(IGameDescription<TState> gameDescription)
         {
             if (gameDescription == null)
             {
@@ -18,7 +18,7 @@ namespace Quarto.Algorithms
             this.gameDescription = gameDescription;
         }
 
-        public IMove<T> GetNextMove(T state)
+        public IMove<TState> GetNextMove(TState state)
         {
             if (state == null)
             {
@@ -28,7 +28,7 @@ namespace Quarto.Algorithms
             return this.gameDescription.GetMoves(state).Select(m => new {Move = m, UtilityValue = this.GetMaximumValue(m.ApplyTo(state))}).OrderByDescending(v => v.UtilityValue).First().Move;
         }
 
-        internal float GetMinimumValue(T state)
+        internal float GetMinimumValue(TState state)
         {
             Debug.Assert(state != null, "state != null");
 
@@ -40,7 +40,7 @@ namespace Quarto.Algorithms
             return this.gameDescription.GetMoves(state).Min(m => this.GetMinimumValue(m.ApplyTo(state)));
         }
 
-        internal float GetMaximumValue(T state)
+        internal float GetMaximumValue(TState state)
         {
             Debug.Assert(state != null, "state != null");
             if (this.gameDescription.IsTerminalState(state))

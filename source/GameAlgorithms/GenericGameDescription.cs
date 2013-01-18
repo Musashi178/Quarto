@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Quarto.Algorithms
 {
-    public class GenericGameDescription<T> : IGameProblemDescription<T>
+    public class GenericGameDescription<TState> : IGameDescription<TState>
     {
-        private readonly Func<T, IEnumerable<IMove<T>>> getMoves;
-        private readonly Func<T, float> getUtilityValue;
-        private readonly Func<T, bool> isTerminalState;
+        private readonly Func<TState, IEnumerable<IMove<TState>>> getMoves;
+        private readonly Func<TState, float> getUtilityValue;
+        private readonly Func<TState, bool> isTerminalState;
 
-        public GenericGameDescription(Func<T, bool> isTerminalState, Func<T, float> getUtilityValue, Func<T, IEnumerable<IMove<T>>> getMoves)
+        public GenericGameDescription(Func<TState, bool> isTerminalState, Func<TState, float> getUtilityValue, Func<TState, IEnumerable<IMove<TState>>> getMoves)
         {
             if (isTerminalState == null)
             {
@@ -31,7 +31,7 @@ namespace Quarto.Algorithms
             this.isTerminalState = isTerminalState;
         }
 
-        public bool IsTerminalState(T state)
+        public bool IsTerminalState(TState state)
         {
             if (state == null)
             {
@@ -41,7 +41,7 @@ namespace Quarto.Algorithms
             return this.isTerminalState(state);
         }
 
-        public float GetUtilityValue(T state)
+        public float GetUtilityValue(TState state)
         {
             if (state == null)
             {
@@ -51,7 +51,7 @@ namespace Quarto.Algorithms
             return this.getUtilityValue(state);
         }
 
-        public IEnumerable<IMove<T>> GetMoves(T state)
+        public IEnumerable<IMove<TState>> GetMoves(TState state)
         {
             if (state == null)
             {
