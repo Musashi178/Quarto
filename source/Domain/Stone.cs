@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Quarto.Domain
 {
@@ -31,11 +28,11 @@ namespace Quarto.Domain
 
     public class Stone : IEquatable<Stone>
     {
-        private readonly Size size;
-        private readonly Surface surface;
         private readonly Color color;
         private readonly Shape shape;
+        private readonly Size size;
         private readonly byte stoneId;
+        private readonly Surface surface;
 
         public Stone(Size size, Surface surface, Color color, Shape shape)
         {
@@ -45,16 +42,6 @@ namespace Quarto.Domain
             this.shape = shape;
 
             this.stoneId = CalculateStoneId(this);
-        }
-
-        public static byte CalculateStoneId(Stone stone)
-        {
-            int stoneId = 0;
-            stoneId += (byte) stone.Size << 0;
-            stoneId += (byte) stone.Surface << 1;
-            stoneId += (byte)stone.Color << 2;
-            stoneId += (byte)stone.Shape << 3;
-            return (byte)stoneId;
         }
 
         public Size Size
@@ -92,6 +79,16 @@ namespace Quarto.Domain
             return this.stoneId == other.stoneId;
         }
 
+        public static byte CalculateStoneId(Stone stone)
+        {
+            int stoneId = 0;
+            stoneId += (byte) stone.Size << 0;
+            stoneId += (byte) stone.Surface << 1;
+            stoneId += (byte) stone.Color << 2;
+            stoneId += (byte) stone.Shape << 3;
+            return (byte) stoneId;
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -109,7 +106,7 @@ namespace Quarto.Domain
                 return false;
             }
 
-            return Equals((Stone) obj);
+            return this.Equals((Stone) obj);
         }
 
         public override int GetHashCode()
@@ -127,6 +124,4 @@ namespace Quarto.Domain
             return !Equals(left, right);
         }
     }
-
-    
 }
