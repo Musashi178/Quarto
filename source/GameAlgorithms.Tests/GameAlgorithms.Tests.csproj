@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +55,10 @@
   <ItemGroup>
     <Compile Include="MinimaxAlgorithmTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicTacToe\Move.cs" />
+    <Compile Include="TicTacToe\PlayField.cs" />
+    <Compile Include="TicTacToe\Sign.cs" />
+    <Compile Include="TicTacToe\State.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameAlgorithms\GameAlgorithms.csproj">
