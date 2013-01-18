@@ -1,45 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Quarto.Algorithms
 {
     public class MinimaxAlgorithm<T>
     {
-        private readonly Func<T, IEnumerable<IMove<T>>> getMoves;
-        private readonly Func<T, float> getUtilityValue;
-        private readonly Func<T, bool> isTerminalState;
+        private readonly IGameProblemDescription<T> gameDescription;
 
-        public MinimaxAlgorithm(Func<T, bool> isTerminalState, Func<T, float> getUtilityValue, Func<T, IEnumerable<IMove<T>>> getMoves)
+        public MinimaxAlgorithm(IGameProblemDescription<T> gameDescription)
         {
-            this.isTerminalState = isTerminalState;
-            this.getUtilityValue = getUtilityValue;
-            this.getMoves = getMoves;
-        }
-
-        internal float GetMinimumValue(T state)
-        {
-            if (this.isTerminalState(state))
+            if (gameDescription == null)
             {
-                return this.getUtilityValue(state);
+                throw new ArgumentNullException("gameDescription");
             }
 
-            return this.getMoves(state).Min(m => this.GetMinimumValue(m.ApplyTo(state)));
-        }
-
-        internal float GetMaximumValue(T state)
-        {
-            if (this.isTerminalState(state))
-            {
-                return this.getUtilityValue(state);
-            }
-
-            return this.getMoves(state).Max(m => this.GetMaximumValue(m.ApplyTo(state)));
+            this.gameDescription = gameDescription;
         }
 
         public IMove<T> GetNextMove(T state)
         {
-            return this.getMoves(state).Select(m => new {Move = m, UtilityValue = this.GetMaximumValue(m.ApplyTo(state))}).OrderByDescending(v => v.UtilityValue).First().Move;
+            if (state == null)
+            {
+                throw new ArgumentNullException("state");
+            }
+
+            return this.gameDescription.GetMoves(state).Select(m => new {Move = m, UtilityValue = this.GetMaximumValue(m.ApplyTo(state))}).OrderByDescending(v => v.UtilityValue).First().Move;
+        }
+
+        internal float GetMinimumValue(T state)
+        {
+            Debug.Assert(state != null, "state != null");
+
+            if (this.gameDescription.IsTerminalState(state))
+            {
+                return this.gameDescription.GetUtilityValue(state);
+            }
+
+            return this.gameDescription.GetMoves(state).Min(m => this.GetMinimumValue(m.ApplyTo(state)));
+        }
+
+        internal float GetMaximumValue(T state)
+        {
+            Debug.Assert(state != null, "state != null");
+            if (this.gameDescription.IsTerminalState(state))
+            {
+                return this.gameDescription.GetUtilityValue(state);
+            }
+
+            return this.gameDescription.GetMoves(state).Max(m => this.GetMaximumValue(m.ApplyTo(state)));
         }
     }
 }

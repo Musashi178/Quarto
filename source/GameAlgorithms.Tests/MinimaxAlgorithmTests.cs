@@ -12,15 +12,16 @@ namespace Quarto.GameAlgorithms.Tests
         public void GetMaximumValue_WithNonTerminalState_ReturnsMaximumValueOfSuccessorState()
         {
             var objectUnderTest = new MinimaxAlgorithm<float>(
-                o => o >= 1.0,
-                o => o,
-                o => new IMove<float>[]
-                    {
-                        new FloatMove(6.0f),
-                        new FloatMove(3.0f),
-                        new FloatMove(7.0f),
-                        new FloatMove(1.2f)
-                    });
+                new GenericGameDescription<float>(
+                    o => o >= 1.0,
+                    o => o,
+                    o => new IMove<float>[]
+                        {
+                            new FloatMove(6.0f),
+                            new FloatMove(3.0f),
+                            new FloatMove(7.0f),
+                            new FloatMove(1.2f)
+                        }));
 
             float result = objectUnderTest.GetMaximumValue(.0f);
 
@@ -31,9 +32,10 @@ namespace Quarto.GameAlgorithms.Tests
         public void GetMaximumValue_WithTerminalState_ReturnsUtilityValue()
         {
             var objectUnderTest = new MinimaxAlgorithm<float>(
-                o => true,
-                o => o,
-                o => Enumerable.Empty<IMove<float>>());
+                new GenericGameDescription<float>(
+                    o => true,
+                    o => o,
+                    o => Enumerable.Empty<IMove<float>>()));
 
             float result = objectUnderTest.GetMaximumValue(4.0f);
 
@@ -44,15 +46,16 @@ namespace Quarto.GameAlgorithms.Tests
         public void GetMinimumValue_WithNonTerminalState_ReturnsMinimumValueOfSuccessorState()
         {
             var objectUnderTest = new MinimaxAlgorithm<float>(
-                o => o >= 1.0,
-                o => o,
-                o => new IMove<float>[]
-                    {
-                        new FloatMove(6.0f),
-                        new FloatMove(3.0f),
-                        new FloatMove(7.0f),
-                        new FloatMove(1.2f)
-                    });
+                new GenericGameDescription<float>(
+                    o => o >= 1.0,
+                    o => o,
+                    o => new IMove<float>[]
+                        {
+                            new FloatMove(6.0f),
+                            new FloatMove(3.0f),
+                            new FloatMove(7.0f),
+                            new FloatMove(1.2f)
+                        }));
 
             float result = objectUnderTest.GetMinimumValue(.0f);
 
@@ -63,9 +66,10 @@ namespace Quarto.GameAlgorithms.Tests
         public void GetMinimumValue_WithTerminalState_ReturnsUtilityValue()
         {
             var objectUnderTest = new MinimaxAlgorithm<float>(
-                o => true,
-                o => o,
-                o => Enumerable.Empty<IMove<float>>());
+                new GenericGameDescription<float>(
+                    o => true,
+                    o => o,
+                    o => Enumerable.Empty<IMove<float>>()));
 
             float result = objectUnderTest.GetMinimumValue(4.0f);
 
