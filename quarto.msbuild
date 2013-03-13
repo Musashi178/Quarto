@@ -1,0 +1,13 @@
+<Project DefaultTargets="Build"  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Configuration>Debug</Configuration>
+	</PropertyGroup>
+
+	<Target Name="Build">
+	     <MSBuild Projects="Source\Quarto.sln" Properties="Configuration=$(Configuration)" ContinueOnError="false" />
+	</Target>
+
+	<Target Name="RunUnitTests">
+
+	</Target>
+</Project>
