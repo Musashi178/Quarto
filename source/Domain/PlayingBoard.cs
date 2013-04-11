@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Immutable;
 
 namespace Quarto.Domain
 {
-    public class PlayingBoard<TStone>
+    public class PlayingBoard
     {
         private readonly int height;
         private readonly int width;
 
-        private readonly TStone[,] playingBoard;
+        private readonly Stone[,] playingBoard;
 
-        public PlayingBoard(int height, int width)
+        internal PlayingBoard(Stone[,] playingBoard)
         {
-            this.playingBoard = new TStone[height, width];
+            this.playingBoard = playingBoard;
+        }
+
+        public PlayingBoard() : this(new Stone[4,4])
+        {
         }
 
         public int Width
@@ -29,12 +32,17 @@ namespace Quarto.Domain
             get { return this.height; }
         }
 
-        public IEnumerable<TStone> GetAllFields()
+        public Stone GetStone(int column, int row)
+        {
+            return playingBoard[column, row];
+        }
+
+        public IEnumerable<Stone> GetAllFields()
         {
             return this.GetRows().SelectMany(r => r);
         }
 
-        public IEnumerable<IEnumerable<TStone>> GetColumns()
+        public IEnumerable<IEnumerable<Stone>> GetColumns()
         {
             for (var w = 0; w < width; ++w)
             {
@@ -42,7 +50,7 @@ namespace Quarto.Domain
             }
         }
 
-        public IEnumerable<IEnumerable<TStone>> GetRows()
+        public IEnumerable<IEnumerable<Stone>> GetRows()
         {
             for (var h = 0; h < height; ++h)
             {
@@ -50,7 +58,7 @@ namespace Quarto.Domain
             }
         }
 
-        public IEnumerable<IEnumerable<TStone>> GetDiagonals()
+        public IEnumerable<IEnumerable<Stone>> GetDiagonals()
         {
             if (width != height)
             {
@@ -61,6 +69,13 @@ namespace Quarto.Domain
 
             yield return Enumerable.Range(0, maxIndex).Select(i => this.playingBoard[i, i]);
             yield return Enumerable.Range(0,maxIndex).Select(i => this.playingBoard[i, maxIndex - i]);
+        }
+
+        public PlayingBoard SetStone(int column, int row, Stone stone)
+        {
+            var playingBoardCopy = (Stone[,])this.playingBoard.Clone();
+            playingBoardCopy[column, row] = stone;
+            return new PlayingBoard(playingBoard);
         }
     }
 }
