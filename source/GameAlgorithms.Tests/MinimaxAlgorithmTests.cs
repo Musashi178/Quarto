@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using Quarto.Algorithms;
@@ -8,6 +9,13 @@ namespace Quarto.GameAlgorithms.Tests
     [TestFixture]
     public class MinimaxAlgorithmTests
     {
+        [Test]
+        public void Ctor_WithNull_ThrowsArgumentNullException()
+        {
+            Action call = () => new MinimaxAlgorithm<object>(null);
+            call.ShouldThrow<ArgumentNullException>();
+        }
+
         [Test]
         public void GetMaximumValue_WithNonTerminalState_ReturnsMaximumValueOfSuccessorState()
         {
@@ -23,7 +31,7 @@ namespace Quarto.GameAlgorithms.Tests
                             new FloatMove(1.2f)
                         }));
 
-            float result = objectUnderTest.GetMaximumValue(.0f);
+            float result = objectUnderTest.GetMaximumValue(.0f).Value;
 
             result.Should().BeApproximately(7.0f, float.Epsilon);
         }
@@ -37,7 +45,7 @@ namespace Quarto.GameAlgorithms.Tests
                     o => o,
                     o => Enumerable.Empty<IMove<float>>()));
 
-            float result = objectUnderTest.GetMaximumValue(4.0f);
+            float result = objectUnderTest.GetMaximumValue(4.0f).Value;
 
             result.Should().BeApproximately(4.0f, float.Epsilon);
         }
@@ -57,7 +65,7 @@ namespace Quarto.GameAlgorithms.Tests
                             new FloatMove(1.2f)
                         }));
 
-            float result = objectUnderTest.GetMinimumValue(.0f);
+            float result = objectUnderTest.GetMinimumValue(.0f).Value;
 
             result.Should().BeApproximately(1.2f, float.Epsilon);
         }
@@ -71,7 +79,7 @@ namespace Quarto.GameAlgorithms.Tests
                     o => o,
                     o => Enumerable.Empty<IMove<float>>()));
 
-            float result = objectUnderTest.GetMinimumValue(4.0f);
+            float result = objectUnderTest.GetMinimumValue(4.0f).Value;
 
             result.Should().BeApproximately(4.0f, float.Epsilon);
         }

@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\contrib\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\..\contrib\NSubstitute.1.5.0.0\lib\NET40\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\contrib\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
@@ -57,12 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericGameDescriptionTests.cs" />
     <Compile Include="MinimaxAlgorithmTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TicTacToe\Move.cs" />
-    <Compile Include="TicTacToe\PlayField.cs" />
-    <Compile Include="TicTacToe\Sign.cs" />
-    <Compile Include="TicTacToe\State.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameAlgorithms\GameAlgorithms.csproj">

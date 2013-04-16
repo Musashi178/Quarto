@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using MoreLinq;
 
 namespace Quarto.Algorithms
 {
@@ -25,30 +26,31 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("state");
             }
 
-            return this.gameDescription.GetMoves(state).Select(m => new {Move = m, UtilityValue = this.GetMaximumValue(m.ApplyTo(state))}).OrderByDescending(v => v.UtilityValue).First().Move;
+            return this.GetMaximumValue(state).Move;
         }
 
-        internal float GetMinimumValue(TState state)
+        internal MoveValue<TState> GetMinimumValue(TState state)
         {
             Debug.Assert(state != null, "state != null");
 
             if (this.gameDescription.IsTerminalState(state))
             {
-                return this.gameDescription.GetUtilityValue(state);
+                return new MoveValue<TState>(null, this.gameDescription.GetUtilityValue(state));
             }
 
-            return this.gameDescription.GetMoves(state).Min(m => this.GetMinimumValue(m.ApplyTo(state)));
+            return this.gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMinimumValue(m.ApplyTo(state)).Value)).MinBy(mv => mv.Value);
         }
 
-        internal float GetMaximumValue(TState state)
+        internal MoveValue<TState> GetMaximumValue(TState state)
         {
             Debug.Assert(state != null, "state != null");
+
             if (this.gameDescription.IsTerminalState(state))
             {
-                return this.gameDescription.GetUtilityValue(state);
+                return new MoveValue<TState>(null, this.gameDescription.GetUtilityValue(state));
             }
-
-            return this.gameDescription.GetMoves(state).Max(m => this.GetMaximumValue(m.ApplyTo(state)));
+            
+            return this.gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMaximumValue(m.ApplyTo(state)).Value)).MaxBy(mv => mv.Value);
         }
     }
 }
