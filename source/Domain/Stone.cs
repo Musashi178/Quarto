@@ -4,40 +4,40 @@ namespace Quarto.Domain
 {
     public class Stone : IEquatable<Stone>
     {
-        private readonly Color color;
-        private readonly Shape shape;
-        private readonly Size size;
-        private readonly byte stoneId;
-        private readonly Surface surface;
+        private readonly Color _color;
+        private readonly Shape _shape;
+        private readonly Size _size;
+        private readonly byte _stoneId;
+        private readonly Surface _surface;
 
         public Stone(Size size, Surface surface, Color color, Shape shape)
         {
-            this.size = size;
-            this.surface = surface;
-            this.color = color;
-            this.shape = shape;
+            this._size = size;
+            this._surface = surface;
+            this._color = color;
+            this._shape = shape;
 
-            this.stoneId = CalculateStoneId(this);
+            this._stoneId = CalculateStoneId(this);
         }
 
         public Size Size
         {
-            get { return this.size; }
+            get { return this._size; }
         }
 
         public Surface Surface
         {
-            get { return this.surface; }
+            get { return this._surface; }
         }
 
         public Color Color
         {
-            get { return this.color; }
+            get { return this._color; }
         }
 
         public Shape Shape
         {
-            get { return this.shape; }
+            get { return this._shape; }
         }
 
         public bool Equals(Stone other)
@@ -52,7 +52,7 @@ namespace Quarto.Domain
                 return true;
             }
 
-            return this.stoneId == other.stoneId;
+            return this._stoneId == other._stoneId;
         }
 
         public static byte CalculateStoneId(Stone stone)
@@ -87,7 +87,7 @@ namespace Quarto.Domain
 
         public override int GetHashCode()
         {
-            return this.stoneId;
+            return this._stoneId;
         }
 
         public static bool operator ==(Stone left, Stone right)

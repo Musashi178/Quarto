@@ -12,7 +12,7 @@ namespace Domain.Tests
         [Test]
         public void CalculateStoneId_GivenAllPossibleStones_ReturnsUniqueIdForEach()
         {
-            var allStonesWithId = this.allPossibleStones.Select(s => new
+            var allStonesWithId = this._allPossibleStones.Select(s => new
                 {
                     Id = Stone.CalculateStoneId(s),
                     Stone = s
@@ -20,10 +20,10 @@ namespace Domain.Tests
 
             Dictionary<byte, Stone> stonesDic = allStonesWithId.ToDictionary(sid => sid.Id, sid => sid.Stone);
 
-            stonesDic.Should().HaveCount(this.allPossibleStones.Length);
+            stonesDic.Should().HaveCount(this._allPossibleStones.Length);
         }
 
-        private readonly Stone[] allPossibleStones = new[]
+        private readonly Stone[] _allPossibleStones = new[]
             {
                 new Stone(Size.High, Surface.Flat, Color.Black, Shape.Round),
                 new Stone(Size.High, Surface.Flat, Color.Black, Shape.Square),
