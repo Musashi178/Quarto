@@ -5,9 +5,9 @@ namespace Quarto.Algorithms
 {
     public class GenericGameDescription<TState> : IGameDescription<TState>
     {
-        private readonly Func<TState, IEnumerable<IMove<TState>>> getMoves;
-        private readonly Func<TState, float> getUtilityValue;
-        private readonly Func<TState, bool> isTerminalState;
+        private readonly Func<TState, IEnumerable<IMove<TState>>> _getMoves;
+        private readonly Func<TState, float> _getUtilityValue;
+        private readonly Func<TState, bool> _isTerminalState;
 
         public GenericGameDescription(Func<TState, bool> isTerminalState, Func<TState, float> getUtilityValue, Func<TState, IEnumerable<IMove<TState>>> getMoves)
         {
@@ -26,9 +26,9 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("getMoves");
             }
 
-            this.getMoves = getMoves;
-            this.getUtilityValue = getUtilityValue;
-            this.isTerminalState = isTerminalState;
+            this._getMoves = getMoves;
+            this._getUtilityValue = getUtilityValue;
+            this._isTerminalState = isTerminalState;
         }
 
         public bool IsTerminalState(TState state)
@@ -38,7 +38,7 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("state");
             }
 
-            return this.isTerminalState(state);
+            return this._isTerminalState(state);
         }
 
         public float GetUtilityValue(TState state)
@@ -48,7 +48,7 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("state");
             }
 
-            return this.getUtilityValue(state);
+            return this._getUtilityValue(state);
         }
 
         public IEnumerable<IMove<TState>> GetMoves(TState state)
@@ -58,7 +58,7 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("state");
             }
 
-            return this.getMoves(state);
+            return this._getMoves(state);
         }
     }
 }

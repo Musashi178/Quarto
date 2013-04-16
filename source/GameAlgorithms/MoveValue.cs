@@ -2,23 +2,23 @@
 {
     internal struct MoveValue<TState>
     {
-        private readonly IMove<TState> move;
-        private readonly float value;
+        private readonly IMove<TState> _move;
+        private readonly float _value;
 
         public MoveValue(IMove<TState> move, float value)
         {
-            this.move = move;
-            this.value = value;
+            this._move = move;
+            this._value = value;
         }
 
         public IMove<TState> Move
         {
-            get { return this.move; }
+            get { return this._move; }
         }
 
         public float Value
         {
-            get { return this.value; }
+            get { return this._value; }
         }
     }
 }

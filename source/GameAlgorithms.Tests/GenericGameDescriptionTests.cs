@@ -10,7 +10,7 @@ namespace Quarto.GameAlgorithms.Tests
     [TestFixture]
     public class GenericGameDescriptionTests
     {
-        private GenericGameDescription<object> objectUnderTest;
+        private GenericGameDescription<object> _objectUnderTest;
 
         [SetUp]
         public void SetUp()

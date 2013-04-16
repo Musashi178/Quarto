@@ -7,7 +7,7 @@ namespace Quarto.Algorithms
 {
     public class MinimaxAlgorithm<TState>
     {
-        private readonly IGameDescription<TState> gameDescription;
+        private readonly IGameDescription<TState> _gameDescription;
 
         public MinimaxAlgorithm(IGameDescription<TState> gameDescription)
         {
@@ -16,7 +16,7 @@ namespace Quarto.Algorithms
                 throw new ArgumentNullException("gameDescription");
             }
 
-            this.gameDescription = gameDescription;
+            this._gameDescription = gameDescription;
         }
 
         public IMove<TState> GetNextMove(TState state)
@@ -33,24 +33,24 @@ namespace Quarto.Algorithms
         {
             Debug.Assert(state != null, "state != null");
 
-            if (this.gameDescription.IsTerminalState(state))
+            if (this._gameDescription.IsTerminalState(state))
             {
-                return new MoveValue<TState>(null, this.gameDescription.GetUtilityValue(state));
+                return new MoveValue<TState>(null, this._gameDescription.GetUtilityValue(state));
             }
 
-            return this.gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMinimumValue(m.ApplyTo(state)).Value)).MinBy(mv => mv.Value);
+            return this._gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMinimumValue(m.ApplyTo(state)).Value)).MinBy(mv => mv.Value);
         }
 
         internal MoveValue<TState> GetMaximumValue(TState state)
         {
             Debug.Assert(state != null, "state != null");
 
-            if (this.gameDescription.IsTerminalState(state))
+            if (this._gameDescription.IsTerminalState(state))
             {
-                return new MoveValue<TState>(null, this.gameDescription.GetUtilityValue(state));
+                return new MoveValue<TState>(null, this._gameDescription.GetUtilityValue(state));
             }
             
-            return this.gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMaximumValue(m.ApplyTo(state)).Value)).MaxBy(mv => mv.Value);
+            return this._gameDescription.GetMoves(state).Select(m => new MoveValue<TState>(m, this.GetMaximumValue(m.ApplyTo(state)).Value)).MaxBy(mv => mv.Value);
         }
     }
 }
