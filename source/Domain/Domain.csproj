@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Color.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="PlayingBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape.cs" />
