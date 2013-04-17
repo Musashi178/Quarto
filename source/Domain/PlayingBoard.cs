@@ -20,14 +20,9 @@ namespace Quarto.Domain
         {
         }
 
-        public Stone GetStone(int column, int row)
+        public Stone GetStone(int row, int column)
         {
-            return this._playingBoard[column, row];
-        }
-
-        public IEnumerable<Stone> GetAllFields()
-        {
-            return this.GetRows().SelectMany(r => r);
+            return this._playingBoard[row, column];
         }
 
         public IEnumerable<IEnumerable<Stone>> GetColumns()
@@ -50,16 +45,14 @@ namespace Quarto.Domain
 
         public IEnumerable<IEnumerable<Stone>> GetDiagonals()
         {
-            const int maxIndex = Width - 1;
-
-            yield return Enumerable.Range(0, maxIndex).Select(i => this._playingBoard[i, i]);
-            yield return Enumerable.Range(0, maxIndex).Select(i => this._playingBoard[i, maxIndex - i]);
+            yield return Enumerable.Range(0, Width).Select(i => this._playingBoard[i, i]);
+            yield return Enumerable.Range(0, Width).Select(i => this._playingBoard[i, Width - i - 1]);
         }
 
-        public PlayingBoard SetStone(int column, int row, Stone stone)
+        public PlayingBoard SetStone(int row, int column, Stone stone)
         {
             var playingBoardCopy = (Stone[,]) this._playingBoard.Clone();
-            playingBoardCopy[column, row] = stone;
+            playingBoardCopy[row, column] = stone;
             return new PlayingBoard(playingBoardCopy);
         }
     }

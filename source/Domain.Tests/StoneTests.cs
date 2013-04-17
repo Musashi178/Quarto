@@ -14,7 +14,7 @@ namespace Domain.Tests
         {
             var allStonesWithId = this._allPossibleStones.Select(s => new
                 {
-                    Id = Stone.CalculateStoneId(s),
+                    Id = (byte)Stone.StoneId.GetStoneId(s),
                     Stone = s
                 }).OrderBy(sid => sid.Id);
 

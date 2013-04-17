@@ -102,6 +102,35 @@ namespace Domain.Tests
             result.CurrentPlayer.Should().NotBe(objectUnderTest.CurrentPlayer);
         }
 
+        [Test]
+        public void IsWinLine_WithFourStonesWithTheSameSizeButNothingElseInCommon_ReturnsTrue()
+        {
+            var winLine = new[]
+                {
+                    new Stone(Size.High, Surface.Flat, Color.Black, Shape.Round),
+                    new Stone(Size.High, Surface.Hole, Color.Black, Shape.Round),
+                    new Stone(Size.High, Surface.Flat, Color.White, Shape.Round),
+                    new Stone(Size.High, Surface.Flat, Color.Black, Shape.Square),
+                };
+            var result = GameState.IsWinLine(winLine);
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsWinLine_WithFourStonesWithNothingInCommon_ReturnsFalse()
+        {
+            var winLine = new[]
+                {
+                    new Stone(Size.Low, Surface.Flat, Color.Black, Shape.Round),
+                    new Stone(Size.High, Surface.Hole, Color.Black, Shape.Round),
+                    new Stone(Size.High, Surface.Flat, Color.White, Shape.Round),
+                    new Stone(Size.High, Surface.Flat, Color.Black, Shape.Square),
+                };
+            var result = GameState.IsWinLine(winLine);
+
+            result.Should().BeFalse();
+        }
 
         private Stone _sampleStone = new Stone(Size.Low, Surface.Hole, Color.White, Shape.Square);
     }
