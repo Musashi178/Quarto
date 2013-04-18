@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace Quarto.Domain
 {
-    internal class GameState
+    public abstract class GameStateBase
     {
         private readonly Player _currentPlayer;
+        private readonly Lazy<bool> _isWinState;
         private readonly Stone _nextStone;
         private readonly PlayingBoard _playingBoard;
-        private Lazy<bool> _isWinState;
 
-        public GameState(PlayingBoard playingBoard, Stone nextStone, Player currentPlayer)
+        protected GameStateBase(PlayingBoard playingBoard, Stone nextStone, Player currentPlayer)
         {
             if (playingBoard == null)
             {
@@ -53,7 +53,7 @@ namespace Quarto.Domain
             get { return this._isWinState.Value; }
         }
 
-        private static bool DetectIsWinState(GameState gameState)
+        private static bool DetectIsWinState(GameStateBase gameState)
         {
             Debug.Assert(gameState != null, "gamestate != null");
 
@@ -70,29 +70,6 @@ namespace Quarto.Domain
             var allLow = ids.Aggregate((b, b1) => (byte) (b | b1));
 
             return allHigh != 0 || allLow != 15;
-        }
-
-        public GameState ChooseAsNextStone(Stone nextStone)
-        {
-            if (this._nextStone != null)
-            {
-                throw new InvalidOperationException("Set the next stone first.");
-            }
-
-            var newPlayer = this._currentPlayer == Player.One ? Player.Two : Player.One;
-            return new GameState(this._playingBoard, nextStone, newPlayer);
-        }
-
-        public GameState SetNextStoneTo(int column, int row)
-        {
-            if (this._nextStone == null)
-            {
-                throw new InvalidOperationException("Choose a stone first.");
-            }
-
-            var newPlayingBoard = this._playingBoard.SetStone(row, column, this._nextStone);
-
-            return new GameState(newPlayingBoard, null, this._currentPlayer);
         }
     }
 }

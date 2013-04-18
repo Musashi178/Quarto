@@ -48,12 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChooseStoneGameState.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="GameState.cs" />
+    <Compile Include="GameStateBase.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayingBoard.cs" />
     <Compile Include="PlayingBoardExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetStoneGameState.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="Stone.cs" />
